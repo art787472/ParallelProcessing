@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "平行處理練習", "平行處理練習\平行處理練習.csproj", "{DA8CB86D-5589-439A-B9D8-EF9B044CFC34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "平行處理", "平行處理\平行處理.csproj", "{79562855-4C0E-4400-8439-691991AA29FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DA8CB86D-5589-439A-B9D8-EF9B044CFC34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA8CB86D-5589-439A-B9D8-EF9B044CFC34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA8CB86D-5589-439A-B9D8-EF9B044CFC34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79562855-4C0E-4400-8439-691991AA29FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79562855-4C0E-4400-8439-691991AA29FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79562855-4C0E-4400-8439-691991AA29FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79562855-4C0E-4400-8439-691991AA29FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
