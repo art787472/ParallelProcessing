@@ -382,3 +382,5 @@ FodyWeavers.xsd
 平行處理練習/MOCK_50000.csv
 平行處理練習/MOCK_500000.csv
 平行處理練習/MOCK_5000000.csv
+/Data/Input
+/Data/Output
