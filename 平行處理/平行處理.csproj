@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="CSVLibrary">
+      <HintPath>..\..\CSVLibrary\CSVLibrary\bin\Debug\CSVLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

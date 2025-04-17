@@ -33,8 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSVLibrary">
-      <HintPath>..\..\CSVLibrary\CSVLibrary\bin\Debug\CSVLibrary.exe</HintPath>
+    <Reference Include="CSVLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\CSVLibrary\CSVLibrary\bin\Debug\CSVLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumerableExtension.cs" />
     <Compile Include="MemoryMappedCsvReader.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Program.cs" />

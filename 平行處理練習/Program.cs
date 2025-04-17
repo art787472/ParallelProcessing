@@ -16,14 +16,85 @@ namespace 平行處理練習
     {
         static async Task Main(string[] args)
         {
+            var parameter = 10_000_000;
             var stopWatch = new Stopwatch();
+            var rootPath = $@"D:\c_sharp\平行處理進階操作\Data";
+            var readPath = Path.Combine(rootPath, $@"Input\MOCK_{parameter}.csv");
+            var writePath = Path.Combine(rootPath, $@"Output\MOCK_{parameter}.csv");
+            var writeDirPath = Path.Combine(rootPath, @"Output");
+            Directory.Delete(writeDirPath, true );
+            Directory.CreateDirectory(writeDirPath);
+
+
+            //stopWatch.Start();
+            //var users = CSVLibrary.CSVHelper.Read<User>(readPath);
+            //stopWatch.Stop();
+            //var readTime = stopWatch.ElapsedMilliseconds;
+            //Console.WriteLine($"只有讀取：{readTime / 1000.0}s");
+            //stopWatch.Restart();
+            //CSVLibrary.CSVHelper.Write<User>(users, writePath);
+            //stopWatch.Stop();
+            //var writeTime = stopWatch.ElapsedMilliseconds;
+            //Console.WriteLine($"寫入:{writeTime / 1000.0}s");
+
+            //Console.WriteLine($"總時間:{(readTime + writeTime) / 1000.0}s");
+
+
+            int batchSize = 4_000_000;
+            int batchCount = (parameter % batchSize == 0 ) ? (parameter / batchSize) : (parameter / batchSize) + 1;
+            
+            List<Task> tasks = new List<Task>();
+
+
+            
+            var readTimeRecords = new List<double>();
+            var writeTimeRecords = new List<double>();
+            stopWatch.Start();
+            for (int i = 0; i < batchCount; i++)
+            {
+                
+                int taskNumber = i;
+                Task task = Task.Run(() =>
+                {
+                    var taskStopWatch = new Stopwatch();
+                    Console.WriteLine($"任務{taskNumber+1}啟動");
+                    taskStopWatch.Start();
+                    var users = CSVLibrary.CSVHelper.Read<User>(readPath, taskNumber * batchSize, batchSize);
+                    taskStopWatch.Stop();
+                    var taskReadTime = taskStopWatch.ElapsedMilliseconds;
+                    readTimeRecords.Add(taskReadTime);
+                    Console.WriteLine($"任務{taskNumber + 1}讀取時間：{taskReadTime / 1000.0}s");
+                    taskStopWatch.Restart();
+                    CSVLibrary.CSVHelper.Write<User>(users, Path.Combine(rootPath, $@"Output\MOCK_{parameter}_{taskNumber+1}.csv"));
+                    taskStopWatch.Stop();
+                    var taskWriteTime = taskStopWatch.ElapsedMilliseconds;
+                    writeTimeRecords.Add(taskWriteTime);
+                    Console.WriteLine($"任務{taskNumber + 1}寫入時間：{taskWriteTime / 1000.0}s");
+
+                });
+
+                tasks.Add(task);    
+            }
+
+            await Task.WhenAll(tasks);
+            stopWatch.Stop();
+
+
+            Console.WriteLine($"讀取時間:{readTimeRecords.Median() / 1000.0}s");
+            Console.WriteLine($"寫入時間:{writeTimeRecords.Median() / 1000.0}s");
+            Console.WriteLine($"總時間:{stopWatch.ElapsedMilliseconds / 1000.0}s");
+
+            Console.WriteLine($"| {parameter} | {readTimeRecords.Median() / 1000.0} | {writeTimeRecords.Median() / 1000.0} |{stopWatch.ElapsedMilliseconds / 1000.0}|");
+
+
+
 
             // 只有讀取：34ms
             // 讀取時間：34ms
             // 寫入時間：64ms
             // 1000筆資料：0.053s
             // 1000筆資料：0.049s
-            //var path = $@"D:\c_sharp\平行處理練習\平行處理練習\MOCK_5000000.csv";
+
             //Stopwatch stopwatch = new Stopwatch();
             //stopwatch.Start();
             //var users = CSVLibrary.CSVHelper.Read<User>(path, 4900000, 50000);
@@ -201,8 +272,8 @@ namespace 平行處理練習
 
             //var res = ProcessLargeFile(@"D:\c_sharp\平行處理練習\平行處理練習\MOCK_5000000.csv");
             // 或
-            var sec = await FiveThreadReadWriteDataTime(10000000);
-            await Console.Out.WriteLineAsync($"{sec}s");
+            //var sec = await FiveThreadReadWriteDataTime(10000000);
+            //await Console.Out.WriteLineAsync($"{sec}s");
 
             // 平行處理多個批次
             //Parallel.ForEach(
